@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     Vector2 moveInput;
     [SerializeField] float moveSpeed = 3;
+    [SerializeField] float bulletSpeed = 7f;
+    [SerializeField] GameObject bullet; 
 
 
 
@@ -18,6 +20,13 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+    }
+
+    void OnAttack()
+    {
+        Rigidbody2D playerBullet = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+        playerBullet.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+
     }
 
     // Update is called once per frame
