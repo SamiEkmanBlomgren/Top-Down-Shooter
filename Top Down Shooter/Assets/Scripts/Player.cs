@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     int playerHealth = 3;
     float targetAngle;
     SpriteRenderer playerSprite;
-    
+
 
 
 
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     IEnumerator IFrame()
     {
         playerSprite.color = Color.darkRed;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         playerSprite.color = Color.red;
     }
 
