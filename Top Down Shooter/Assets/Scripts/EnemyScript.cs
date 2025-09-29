@@ -5,6 +5,7 @@ public class EnemyScript : MonoBehaviour
     Transform player;
     [SerializeField] float moveSpeed = 3f;
     Rigidbody2D rb;
+    float bigEnemyHealth = 3f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

@@ -229,6 +229,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   gun: {fileID: 4289799035655567586}
   rotationSpeed: 700
+  invinsibleTime: 2
 --- !u!114 &6993647829292538863
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     Rigidbody2D rb;
     Vector2 moveInput;
@@ -12,12 +12,11 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject gun;
     [SerializeField] float rotationSpeed = 700f;
-    int playerHealth = 3;
+    [SerializeField] float invinsibleTime2 = 2f;
+    [SerializeField] float invinsibleTime1 = 1f;
+    float playerHealth = 3f;
     float targetAngle;
-    SpriteRenderer playerSprite;
-
-
-
+    bool invincible;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,23 +52,42 @@ public class Player : MonoBehaviour
         float rotation = Mathf.MoveTowardsAngle(rb.rotation, targetAngle - 90, rotationSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(rotation);
     }
-    IEnumerator IFrame()
+    void ResetInvincibility()
     {
-        playerSprite.color = Color.darkRed;
-        yield return new WaitForSeconds(2);
-        playerSprite.color = Color.red;
+        invincible = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemies"))
+        if (collision.gameObject.CompareTag("Enemies") && !invincible)
         {
-            StartCoroutine("IFrame");
-            playerHealth -= 1;
+            if (playerHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                playerHealth -= 0.5f;
+                invincible = true;
+                Invoke("ResetInvincibility", invinsibleTime1);
+                Debug.Log("Player health:" + playerHealth);
+            }
         }
-        if (playerHealth == 0)
+        if (collision.gameObject.CompareTag("BigEnemies") && !invincible)
         {
-            Destroy(gameObject);
+            if (playerHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                playerHealth -= 2f;
+                invincible = true;
+                Invoke("ResetInvincibility", invinsibleTime2);
+                Debug.Log("Player health:" + playerHealth);
+            }
         }
+
+
     }
 }
